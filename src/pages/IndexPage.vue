@@ -1,15 +1,28 @@
 <template>
-  <q-page class="flex flex-center">
-    <img
-      alt="Quasar logo"
-      src="~assets/quasar-logo-vertical.svg"
-      style="width: 200px; height: 200px"
+  <div>
+    <q-select
+      label="Jump up"
+      transition-show="jump-up"
+      transition-hide="jump-up"
+      filled
+      v-model="undergraduatedDegree"
+      :options="options"
+      style="width: 250px"
     />
-  </q-page>
+  </div>
 </template>
 
 <script setup>
-defineOptions({
-  name: "IndexPage",
-});
+import { ref, watch } from "vue";
+
+const undergraduatedDegree = ref(null);
+const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
+watch(
+  () => undergraduatedDegree.value,
+  (newVal) => {
+    console.log(newVal);
+  }
+);
 </script>
+
+<style></style>
