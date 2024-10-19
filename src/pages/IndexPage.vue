@@ -20,6 +20,17 @@
       style="width: 250px"
       class="q-mb-md"
     />
+    <q-select
+      label="Caste"
+      transition-show="jump-up"
+      transition-hide="jump-up"
+      filled
+      v-model="caste"
+      :options="casteOptions"
+      style="width: 250px"
+      class="q-mb-md"
+    />
+    <q-checkbox dense v-model="teal" label="Teal" color="teal" /> <br />
     <q-btn dense no-caps label="Посчитать" @click="getResult" />
   </div>
 </template>
@@ -31,6 +42,8 @@ import { QSpinnerGears, useQuasar } from "quasar";
 const undergraduatedDegree = ref(null);
 const $q = useQuasar();
 let costs = ref(100);
+const caste = ref("");
+const teal = ref("");
 const options = [
   "Undergraduate degree",
   "College degree",
@@ -44,26 +57,17 @@ const familyOptions = [
   "More than 10,000$",
   "Less than 5,000$",
 ];
+
+const casteOptions = [
+  "Brahmin",
+  "Kshatriya",
+  "Vaishya",
+  "Shudra",
+  "Varna - untouchable",
+];
 onMounted(() => {
   // countCosts();
 });
-watch(
-  () => undergraduatedDegree.value,
-  (newVal) => {
-    // console.log(newVal);
-    // countCosts(newVal, null);
-  }
-);
-
-watch(
-  () => familytWorth.value,
-  (newVal) => {
-    $q.notify({
-      message: `Worth: ${newVal}`,
-    });
-    // countWorth(null, newVal);
-  }
-);
 
 const getResult = () => {
   countCosts(undergraduatedDegree.value, null);
@@ -89,9 +93,30 @@ const countCosts = (familyWorth) => {
 
 const countWorth = (degreeCount) => {
   // console.log(degreeCount);
-  if (familytWorth.value === 10000) {
+  if (familytWorth.value === "Less than 5,000$") {
+    costs.value = degreeCount * 1.2;
+  } else if (familytWorth.value === "Between 5,000$ and 10,000$") {
+    costs.value = degreeCount * 1.5;
+  } else if (familytWorth.value === "More than 10,000$") {
     costs.value = degreeCount * 2;
   }
+  // console.log(costs.value);
+  countCaste(costs.value);
+};
+
+const countCaste = (degreeCount) => {
+  if (caste.value === "Brahmin") {
+    costs.value = degreeCount + 100;
+  } else if (caste.value === "Kshatriya") {
+    costs.value = degreeCount + 50;
+  } else if (caste.value === "Vaishya") {
+    costs.value = degreeCount + 20;
+  } else if (caste.value === "Shudra") {
+    costs.value = degreeCount + 10;
+  } else if (caste.value === "Varna - untouchable") {
+    costs.value = degreeCount - 50;
+  }
+
   console.log(costs.value);
 };
 </script>
