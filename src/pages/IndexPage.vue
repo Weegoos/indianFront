@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-select
-      label="Jump up"
+      label="Degree"
       transition-show="jump-up"
       transition-hide="jump-up"
       filled
@@ -16,7 +16,12 @@
 import { ref, watch } from "vue";
 
 const undergraduatedDegree = ref(null);
-const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
+const options = [
+  "Undergraduate degree ",
+  "College degree ",
+  "High school degree",
+  "Middle school degree ",
+];
 watch(
   () => undergraduatedDegree.value,
   (newVal) => {
