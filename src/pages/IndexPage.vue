@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="q-pa-lg">
     <q-select
       label="Degree"
       transition-show="jump-up"
@@ -8,7 +8,19 @@
       v-model="undergraduatedDegree"
       :options="options"
       style="width: 250px"
+      class="q-mb-md"
     />
+    <q-select
+      label="Family Worth"
+      transition-show="jump-up"
+      transition-hide="jump-up"
+      filled
+      v-model="familytWorth"
+      :options="familyOptions"
+      style="width: 250px"
+      class="q-mb-md"
+    />
+    <q-btn dense no-caps label="Посчитать" @click="getResult" />
   </div>
 </template>
 
@@ -25,6 +37,13 @@ const options = [
   "High school degree",
   "Middle school degree",
 ];
+
+const familytWorth = ref(null);
+const familyOptions = [
+  "Between 5,000$ and 10,000$",
+  "More than 10,000$",
+  "Less than 5,000$",
+];
 onMounted(() => {
   // countCosts();
 });
@@ -32,26 +51,48 @@ watch(
   () => undergraduatedDegree.value,
   (newVal) => {
     // console.log(newVal);
-    $q.notify({
-      message: `Degree: ${newVal}`,
-    });
-    countCosts(newVal, null);
+    // countCosts(newVal, null);
   }
 );
 
-const countCosts = (degree, familyWorth) => {
+watch(
+  () => familytWorth.value,
+  (newVal) => {
+    $q.notify({
+      message: `Worth: ${newVal}`,
+    });
+    // countWorth(null, newVal);
+  }
+);
+
+const getResult = () => {
+  countCosts(undergraduatedDegree.value, null);
+};
+
+const countCosts = (familyWorth) => {
   // console.log(degree, familyWorth);
   let count;
-  if (degree == "Undergraduate degree") {
-    count = costs.value * 1.5;
-  } else if (degree == "College degree") {
-    count = costs.value * 1.2;
-  } else if (degree === "High school degree") {
-    count = costs.value * 1.05;
-  } else if (degree == "Middle school degree") {
-    count = costs.value * 0.9;
+  if (undergraduatedDegree.value == "Undergraduate degree") {
+    costs.value = costs.value * 1.5;
+  } else if (undergraduatedDegree.value == "College degree") {
+    costs.value = costs.value * 1.2;
+  } else if (undergraduatedDegree.value === "High school degree") {
+    costs.value = costs.value * 1.05;
+  } else if (undergraduatedDegree.value == "Middle school degree") {
+    costs.value = costs.value * 0.9;
+  } else {
+    throw new Error("Вы не выбрали степень образование");
   }
-  console.log(count);
+  // console.log(costs.value);
+  countWorth(costs.value);
+};
+
+const countWorth = (degreeCount) => {
+  // console.log(degreeCount);
+  if (familytWorth.value === 10000) {
+    costs.value = degreeCount * 2;
+  }
+  console.log(costs.value);
 };
 </script>
 
