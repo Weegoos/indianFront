@@ -73,6 +73,8 @@
         label="28+"
       />
     </div>
+
+    <div class></div>
     <q-btn dense no-caps label="Посчитать" @click="getResult" />
   </div>
 </template>
@@ -177,6 +179,17 @@ const countSkills = (degreeCount) => {
     costs.value = degreeCount + 10;
   }
   console.log(costs.value);
+  countAge(costs.value);
+};
+
+const countAge = (degreeCount) => {
+  if (age.value === "Between 18-23") {
+    costs.value = degreeCount * 1.5;
+  } else if (age.value === "Between 24-27") {
+    costs.value = degreeCount * 1.2;
+  } else if (age.value === "28+") {
+    costs.value = degreeCount * 0.95;
+  }
 };
 </script>
 
