@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-lg">
+  <div class="q-pa-xl">
     <q-select
       label="Degree"
       transition-show="jump-up"
@@ -219,6 +219,9 @@ const countGossips = (degreeCount) => {
   }
 
   console.log(costs.value);
+  $q.notify({
+    message: `Costs: ${costs.value}`,
+  });
 };
 </script>
 
