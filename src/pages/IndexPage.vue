@@ -30,7 +30,56 @@
       style="width: 250px"
       class="q-mb-md"
     />
-    <q-checkbox dense v-model="teal" label="Teal" color="teal" /> <br />
+
+    <q-checkbox
+      dense
+      v-model="music"
+      label="Playing on a musical instrument"
+      color="teal"
+    />
+    <br />
+    <q-checkbox dense v-model="cook" label="Good cook" color="teal" />
+    <br />
+    <q-checkbox
+      dense
+      v-model="character"
+      label="Easygoing character"
+      color="teal"
+    />
+
+    <br />
+    <q-checkbox dense v-model="sings" label="Sings well" color="teal" />
+    <br />
+    <div class="q-gutter-sm">
+      <q-radio
+        v-model="shape"
+        checked-icon="task_alt"
+        unchecked-icon="panorama_fish_eye"
+        val="line"
+        label="Line"
+      />
+      <q-radio
+        v-model="shape"
+        checked-icon="task_alt"
+        unchecked-icon="panorama_fish_eye"
+        val="rectangle"
+        label="Rectangle"
+      />
+      <q-radio
+        v-model="shape"
+        checked-icon="task_alt"
+        unchecked-icon="panorama_fish_eye"
+        val="ellipse"
+        label="Ellipse"
+      />
+      <q-radio
+        v-model="shape"
+        checked-icon="task_alt"
+        unchecked-icon="panorama_fish_eye"
+        val="polygon"
+        label="Polygon"
+      />
+    </div>
     <q-btn dense no-caps label="Посчитать" @click="getResult" />
   </div>
 </template>
@@ -69,8 +118,14 @@ onMounted(() => {
   // countCosts();
 });
 
+const music = ref("");
+const cook = ref("");
+const character = ref("");
+const sings = ref("");
+
 const getResult = () => {
   countCosts(undergraduatedDegree.value, null);
+  console.log(teal.value);
 };
 
 const countCosts = (familyWorth) => {
@@ -84,10 +139,7 @@ const countCosts = (familyWorth) => {
     costs.value = costs.value * 1.05;
   } else if (undergraduatedDegree.value == "Middle school degree") {
     costs.value = costs.value * 0.9;
-  } else {
-    throw new Error("Вы не выбрали степень образование");
   }
-  // console.log(costs.value);
   countWorth(costs.value);
 };
 
@@ -117,6 +169,19 @@ const countCaste = (degreeCount) => {
     costs.value = degreeCount - 50;
   }
 
+  countSkills(costs.value);
+};
+
+const countSkills = (degreeCount) => {
+  if (music.value === true) {
+    costs.value = degreeCount + 10;
+  } else if (cook.value === true) {
+    costs.value = degreeCount + 20;
+  } else if (character.value === true) {
+    costs.value = degreeCount + 15;
+  } else if (sings.value === true) {
+    costs.value = degreeCount + 10;
+  }
   console.log(costs.value);
 };
 </script>
