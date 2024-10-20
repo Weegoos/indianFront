@@ -74,7 +74,20 @@
       />
     </div>
 
-    <div class></div>
+    <div class="q-gutter-sm">
+      <q-checkbox
+        v-model="attitude"
+        label="Gossips about his/her parent's attitude"
+      />
+      <q-checkbox
+        v-model="characterGossips"
+        label="Gossips about his/her character"
+      />
+      <q-checkbox
+        v-model="generalGossips"
+        label="General gossips around his/her person"
+      />
+    </div>
     <q-btn dense no-caps label="Посчитать" @click="getResult" />
   </div>
 </template>
@@ -117,6 +130,10 @@ const music = ref("");
 const cook = ref("");
 const character = ref("");
 const sings = ref("");
+const attitude = ref("");
+const characterGossips = ref("");
+const generalGossips = ref("");
+
 const age = ref("line");
 
 const getResult = () => {
@@ -178,7 +195,6 @@ const countSkills = (degreeCount) => {
   } else if (sings.value === true) {
     costs.value = degreeCount + 10;
   }
-  console.log(costs.value);
   countAge(costs.value);
 };
 
@@ -190,6 +206,19 @@ const countAge = (degreeCount) => {
   } else if (age.value === "28+") {
     costs.value = degreeCount * 0.95;
   }
+  countGossips(costs.value);
+};
+
+const countGossips = (degreeCount) => {
+  if (attitude.value === true) {
+    costs.value = degreeCount * 0.85;
+  } else if (characterGossips.value === true) {
+    costs.value = degreeCount * 0.9;
+  } else if (generalGossips.value === true) {
+    costs.value = degreeCount - 20;
+  }
+
+  console.log(costs.value);
 };
 </script>
 
