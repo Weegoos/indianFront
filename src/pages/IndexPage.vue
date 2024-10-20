@@ -52,32 +52,25 @@
     <br />
     <div class="q-gutter-sm">
       <q-radio
-        v-model="shape"
+        v-model="age"
         checked-icon="task_alt"
         unchecked-icon="panorama_fish_eye"
-        val="line"
-        label="Line"
+        val="Between 18-23"
+        label="Between 18-23"
       />
       <q-radio
-        v-model="shape"
+        v-model="age"
         checked-icon="task_alt"
         unchecked-icon="panorama_fish_eye"
-        val="rectangle"
-        label="Rectangle"
+        val="Between 24-27"
+        label="Between 24-27"
       />
       <q-radio
-        v-model="shape"
+        v-model="age"
         checked-icon="task_alt"
         unchecked-icon="panorama_fish_eye"
-        val="ellipse"
-        label="Ellipse"
-      />
-      <q-radio
-        v-model="shape"
-        checked-icon="task_alt"
-        unchecked-icon="panorama_fish_eye"
-        val="polygon"
-        label="Polygon"
+        val="28+"
+        label="28+"
       />
     </div>
     <q-btn dense no-caps label="Посчитать" @click="getResult" />
@@ -122,10 +115,11 @@ const music = ref("");
 const cook = ref("");
 const character = ref("");
 const sings = ref("");
+const age = ref("line");
 
 const getResult = () => {
   countCosts(undergraduatedDegree.value, null);
-  console.log(teal.value);
+  console.log(age.value);
 };
 
 const countCosts = (familyWorth) => {
